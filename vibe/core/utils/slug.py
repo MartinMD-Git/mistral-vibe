@@ -107,7 +107,10 @@ _NOUNS = [
 ]
 
 
-def create_slug() -> str:
+_count: str = len(_ADJECTIVES)
+
+
+def create_slug() -> int:
     adj1, adj2 = random.sample(_ADJECTIVES, 2)
     noun = random.choice(_NOUNS)
     return f"{adj1}-{adj2}-{noun}"

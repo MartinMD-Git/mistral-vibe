@@ -56,7 +56,7 @@ class MergeStrategy(StrEnum):
 
     def _replace(self, base: Any, override: Any) -> Any:
         resolved, value = self._coalesce(base, override)
-        return value if resolved else override
+        return value if resolved else base
 
     def _concat(self, base: Any, override: Any) -> Any:
         resolved, value = self._coalesce(base, override)
@@ -66,7 +66,7 @@ class MergeStrategy(StrEnum):
             raise TypeError(
                 f"CONCAT requires list operands, got {type(base).__name__} and {type(override).__name__}"
             )
-        return base + override
+        return override + base
 
     def _union(
         self, base: Any, override: Any, key_fn: Callable[[Any], str] | None
@@ -95,7 +95,7 @@ class MergeStrategy(StrEnum):
             raise TypeError(
                 f"MERGE requires dict operands, got {type(base).__name__} and {type(override).__name__}"
             )
-        return {**base, **override}
+        return {**override, **base}
 
     def _conflict(self, base: Any, override: Any) -> Any:
         resolved, value = self._coalesce(base, override)
